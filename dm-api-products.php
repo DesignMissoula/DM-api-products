@@ -10,4 +10,7 @@ Author URI: http://bradknowlton.com/
 
 // Initialize Settings
 require_once(sprintf("%s/inc/settings.php", dirname(__FILE__)));
-$WP_Plugin_Template_Settings = new WP_Plugin_Template_Settings();
+
+
+if( is_admin() )
+    $my_settings_page = new MySettingsPage();
