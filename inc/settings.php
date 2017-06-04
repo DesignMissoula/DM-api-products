@@ -84,7 +84,24 @@ class MySettingsPage
             array( $this, 'title_callback' ), 
             'my-setting-admin', 
             'setting_section_id'
-        );      
+        );  
+
+        add_settings_field(
+            'api_key', 
+            'API Key', 
+            array( $this, 'api_key_callback' ), 
+            'my-setting-admin', 
+            'setting_section_id'
+        );              
+
+        add_settings_field(
+            'api_password', 
+            'API Password', 
+            array( $this, 'api_password_callback' ), 
+            'my-setting-admin', 
+            'setting_section_id'
+        );              
+
     }
 
     /**
@@ -100,6 +117,13 @@ class MySettingsPage
 
         if( isset( $input['title'] ) )
             $new_input['title'] = sanitize_text_field( $input['title'] );
+
+        if( isset( $input['api_key'] ) )
+            $new_input['api_key'] = sanitize_text_field( $input['api_key'] );
+
+		if( isset( $input['api_password'] ) )
+            $new_input['api_password'] = sanitize_text_field( $input['api_password'] );
+
 
         return $new_input;
     }
@@ -133,4 +157,26 @@ class MySettingsPage
             isset( $this->options['title'] ) ? esc_attr( $this->options['title']) : ''
         );
     }
+
+    /** 
+     * Get the settings option array and print one of its values
+     */
+    public function api_key_callback()
+    {
+        printf(
+            '<input type="text" id="api_key" name="my_option_name[api_key]" value="%s" />',
+            isset( $this->options['api_key'] ) ? esc_attr( $this->options['api_key']) : ''
+        );
+    }
+
+    /** 
+     * Get the settings option array and print one of its values
+     */
+    public function api_password_callback()
+    {
+        printf(
+            '<input type="text" id="api_password" name="my_option_name[api_password]" value="%s" />',
+            isset( $this->options['api_password'] ) ? esc_attr( $this->options['api_password']) : ''
+        );
+    }        
 }
