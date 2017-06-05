@@ -23,7 +23,7 @@ class MySettingsPage
         // This page will be under "Settings"
         add_options_page(
             'Settings Admin', 
-            'My Settings', 
+            'Products', 
             'manage_options', 
             'my-setting-admin', 
             array( $this, 'create_admin_page' )
@@ -39,7 +39,7 @@ class MySettingsPage
         $this->options = get_option( 'my_option_name' );
         ?>
         <div class="wrap">
-            <h1>My Settings</h1>
+            <h1>Product Settings</h1>
             <form method="post" action="options.php">
             <?php
                 // This prints out all hidden setting fields
@@ -65,39 +65,39 @@ class MySettingsPage
 
         add_settings_section(
             'setting_section_id', // ID
-            'My Custom Settings', // Title
+            'API Settings', // Title
             array( $this, 'print_section_info' ), // Callback
             'my-setting-admin' // Page
         );  
 
-        add_settings_field(
-            'id_number', // ID
-            'ID Number', // Title 
-            array( $this, 'id_number_callback' ), // Callback
-            'my-setting-admin', // Page
-            'setting_section_id' // Section           
-        );      
+        // add_settings_field(
+        //     'id_number', // ID
+        //     'ID Number', // Title 
+        //     array( $this, 'id_number_callback' ), // Callback
+        //     'my-setting-admin', // Page
+        //     'setting_section_id' // Section           
+        // );      
+
+        // add_settings_field(
+        //     'title', 
+        //     'Title', 
+        //     array( $this, 'title_callback' ), 
+        //     'my-setting-admin', 
+        //     'setting_section_id'
+        // );  
 
         add_settings_field(
-            'title', 
-            'Title', 
-            array( $this, 'title_callback' ), 
-            'my-setting-admin', 
-            'setting_section_id'
-        );  
-
-        add_settings_field(
-            'api_key', 
-            'API Key', 
-            array( $this, 'api_key_callback' ), 
+            'app_id', 
+            'APP ID', 
+            array( $this, 'app_id_callback' ), 
             'my-setting-admin', 
             'setting_section_id'
         );              
 
         add_settings_field(
-            'api_password', 
-            'API Password', 
-            array( $this, 'api_password_callback' ), 
+            'secret_key', 
+            'Secret Key', 
+            array( $this, 'secret_key_callback' ), 
             'my-setting-admin', 
             'setting_section_id'
         );              
@@ -118,11 +118,11 @@ class MySettingsPage
         if( isset( $input['title'] ) )
             $new_input['title'] = sanitize_text_field( $input['title'] );
 
-        if( isset( $input['api_key'] ) )
-            $new_input['api_key'] = sanitize_text_field( $input['api_key'] );
+        if( isset( $input['app_id'] ) )
+            $new_input['app_id'] = sanitize_text_field( $input['app_id'] );
 
-		if( isset( $input['api_password'] ) )
-            $new_input['api_password'] = sanitize_text_field( $input['api_password'] );
+		if( isset( $input['secret_key'] ) )
+            $new_input['secret_key'] = sanitize_text_field( $input['secret_key'] );
 
 
         return $new_input;
@@ -161,22 +161,22 @@ class MySettingsPage
     /** 
      * Get the settings option array and print one of its values
      */
-    public function api_key_callback()
+    public function app_id_callback()
     {
         printf(
-            '<input type="text" id="api_key" name="my_option_name[api_key]" value="%s" />',
-            isset( $this->options['api_key'] ) ? esc_attr( $this->options['api_key']) : ''
+            '<input type="text" id="app_id" name="my_option_name[app_id]" value="%s" />',
+            isset( $this->options['app_id'] ) ? esc_attr( $this->options['app_id']) : ''
         );
     }
 
     /** 
      * Get the settings option array and print one of its values
      */
-    public function api_password_callback()
+    public function secret_key_callback()
     {
         printf(
-            '<input type="text" id="api_password" name="my_option_name[api_password]" value="%s" />',
-            isset( $this->options['api_password'] ) ? esc_attr( $this->options['api_password']) : ''
+            '<input type="text" id="secret_key" name="my_option_name[secret_key]" value="%s" />',
+            isset( $this->options['secret_key'] ) ? esc_attr( $this->options['secret_key']) : ''
         );
     }        
 }
